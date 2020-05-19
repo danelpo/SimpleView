@@ -1,0 +1,12 @@
+<drawables>
+    <bitmap id="LauncherIcon" filename="launcher_icon.png" />
+    <drawable-list id="bluetooth" background="Graphics.COLOR_TRANSPARENT" x="82" y="42">
+    	<bitmap id="BT" filename="bluetooth_white.png"/>
+    </drawable-list>
+    <drawable-list id="bluetooth_error" background="Graphics.COLOR_TRANSPARENT" x="82" y="42">
+    	<bitmap id="BT_E" filename="bluetooth_red.png"/>
+    </drawable-list>
+    <drawable-list id="bell" background="Graphics.COLOR_TRANSPARENT" x="144" y="42">
+    	<bitmap id="bellIcon" filename="bell.png"/>
+    </drawable-list>
+</drawables>

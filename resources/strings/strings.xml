@@ -1,0 +1,48 @@
+<strings>
+    <string id="AppName">SimpleView</string>
+    
+    <string id="MinuteFillTitle">Set Goal For Minutes Bar</string>
+    <string id="ArcFillTitle">Set Goal For Watch Edge</string>
+    <string id="CalorieGoalTitle">Set Calories Burnt A Day Goal</string>
+
+    <string id="calories">Calories Burnt Today</string>
+    <string id="steps">Steps Walked Today</string>
+    <string id="intensity">Intensity Minutes This Week</string>
+    <string id="nothing">Leave Blank</string>
+    
+    <string id="h15">1500</string>
+    <string id="h20">2000</string>
+    <string id="h25">2500</string>
+    <string id="h30">3000</string>
+    <string id="h35">3500</string>
+    <string id="h40">4000</string>
+    <string id="h45">4500</string>
+    <string id="h50">5000</string>
+    <string id="h55">5500</string>
+    <string id="h60">6000</string>
+    
+    <string id="FillHoursWithBatteryTitle">Fill Hour Numbers With Battery Status</string>
+    <string id="ShowBluetoothConnectionTitle">Show Bluetooth Connection Status</string>
+    
+    <string id="ShowNotificationStatusTitle">Notification Circle Options</string>
+    <string id="notif0">Do not show notifications</string>
+    <string id="notif1">Show notifications, without number</string>
+    <string id="notif2">Show number of notifications</string>
+    <string id="ChangeBatteryColorBasedOnStatusTitle">Change Battery Status Color Based On Percentage</string>
+    
+    <string id="ShowAlarmsSetTitle">Show If Any Alarms Are Set</string>
+    
+    <string id="FinishedArcColorTitle">Select Color For Arc When Goal Reached</string>
+    <string id="MinuteFillColorTitle">Select Color For Minutes-Number-Fill</string>
+    <string id="White">White</string>
+    <string id="Gray">Gray</string>
+    <string id="Blue">Blue</string>
+    <string id="Green">Green</string>
+    <string id="DarkGreen">Dark Green</string>
+    <string id="Red">Red</string>
+    <string id="DarkRed">Dark Red</string>
+    <string id="Yellow">Yellow</string>
+    <string id="Purple">Purple</string>
+    <string id="LightBlue">Light Blue</string>
+    <string id="Orange">Orange</string>
+</strings>

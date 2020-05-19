@@ -1,0 +1,91 @@
+<settings>
+	<!-- 1,2,3,0 : steps, calories, intensity, nothing -->
+	<setting propertyKey="@Properties.MinuteFill" title="@Strings.MinuteFillTitle">
+        <settingConfig type="list">
+            <listEntry value="2">@Strings.calories</listEntry>
+            <listEntry value="1">@Strings.steps</listEntry>
+            <listEntry value="0">@Strings.nothing</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.ArcFill" title="@Strings.ArcFillTitle">
+        <settingConfig type="list">
+        	<listEntry value="2">@Strings.calories</listEntry>
+            <listEntry value="1">@Strings.steps</listEntry>
+            <listEntry value="0">@Strings.nothing</listEntry>
+        </settingConfig>
+    </setting>
+
+    <setting propertyKey="@Properties.CalorieGoal" title="@Strings.CalorieGoalTitle">
+        <settingConfig type="list">
+            <listEntry value="1500">@Strings.h15</listEntry>
+            <listEntry value="2000">@Strings.h20</listEntry>
+            <listEntry value="2500">@Strings.h25</listEntry>
+            <listEntry value="3000">@Strings.h30</listEntry>
+            <listEntry value="3500">@Strings.h35</listEntry>
+            <listEntry value="4000">@Strings.h40</listEntry>
+            <listEntry value="4500">@Strings.h45</listEntry>
+            <listEntry value="5000">@Strings.h50</listEntry>
+            <listEntry value="5500">@Strings.h55</listEntry>
+            <listEntry value="6000">@Strings.h60</listEntry>
+        </settingConfig>
+    </setting>
+    
+    <setting propertyKey="@Properties.FillHoursWithBattery" title="@Strings.FillHoursWithBatteryTitle">
+    	<settingConfig type="boolean" />
+    </setting>
+    
+    <setting propertyKey="@Properties.ShowBluetoothConnection" title="@Strings.ShowBluetoothConnectionTitle">
+    	<settingConfig type="boolean" />
+    </setting>
+    
+    <!-- 0,1,2 : don't show, show if notification w/o number, show w number -->
+    <setting propertyKey="@Properties.ShowNotificationStatus" title="@Strings.ShowNotificationStatusTitle">
+        <settingConfig type="list">
+        	<listEntry value="0">@Strings.notif0</listEntry>
+            <listEntry value="1">@Strings.notif1</listEntry>
+            <listEntry value="2">@Strings.notif2</listEntry>
+        </settingConfig>
+    </setting>
+    
+    <setting propertyKey="@Properties.ShowAlarmsSet" title="@Strings.ShowAlarmsSetTitle">
+    	<settingConfig type="boolean" />
+    </setting>
+    
+    <setting propertyKey="@Properties.ChangeBatteryColorBasedOnStatus" title="@Strings.ChangeBatteryColorBasedOnStatusTitle">
+    	<settingConfig type="boolean" />
+    </setting>
+    
+    <setting propertyKey="@Properties.FinishedArcColor" title="@Strings.FinishedArcColorTitle">
+        <settingConfig type="list">
+            <listEntry value="0xFF0000">@Strings.Red</listEntry>
+            <listEntry value="0x660000">@Strings.DarkRed</listEntry>
+            <listEntry value="0xFF6600">@Strings.Orange</listEntry>
+            <listEntry value="0xFFFF00">@Strings.Yellow</listEntry>
+            <listEntry value="0x00FF00">@Strings.Green</listEntry>
+            <listEntry value="0x004400">@Strings.DarkGreen</listEntry>
+            <listEntry value="0x6666FF">@Strings.LightBlue</listEntry>
+            <listEntry value="0x0000FF">@Strings.Blue</listEntry>
+            <listEntry value="0xAA00AA">@Strings.Purple</listEntry>
+            <listEntry value="0xFFFFFF">@Strings.White</listEntry>
+            <listEntry value="0xAAAAAA">@Strings.Gray</listEntry>
+        </settingConfig>
+    </setting>
+    
+    <setting propertyKey="@Properties.MinuteFillColor" title="@Strings.MinuteFillColorTitle">
+        <settingConfig type="list">
+            <listEntry value="0xFF0000">@Strings.Red</listEntry>
+            <listEntry value="0x660000">@Strings.DarkRed</listEntry>
+            <listEntry value="0xFF6600">@Strings.Orange</listEntry>
+            <listEntry value="0xFFFF00">@Strings.Yellow</listEntry>
+            <listEntry value="0x00FF00">@Strings.Green</listEntry>
+            <listEntry value="0x004400">@Strings.DarkGreen</listEntry>
+            <listEntry value="0x6666FF">@Strings.LightBlue</listEntry>
+            <listEntry value="0x0000FF">@Strings.Blue</listEntry>
+            <listEntry value="0xAA00AA">@Strings.Purple</listEntry>
+            <listEntry value="0xFFFFFF">@Strings.White</listEntry>
+            <listEntry value="0xAAAAAA">@Strings.Gray</listEntry>
+        </settingConfig>
+    </setting>
+
+</settings>
