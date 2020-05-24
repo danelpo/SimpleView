@@ -1,0 +1,13 @@
+<properties>
+	<property id="MinuteFill" type="number">2</property><!-- 1,2,0 : steps, calories, nothing -->
+	<property id="CalorieGoal" type="number">2500</property>
+	
+	<property id="FillHoursWithBattery" type="boolean">true</property>
+	<property id ="ChangeBatteryColorBasedOnStatus" type="boolean">true</property>
+	<property id="ShowBluetoothConnection" type="boolean">true</property>
+	<property id="ShowAlarmsSet" type="boolean">true</property>
+	
+	<property id="ShowNotificationStatus" type="number">2</property><!-- 0,1,2 : don't show, show if notification w/o number, show w number -->
+	
+	<property id ="MinuteFillColor" type="number">0xFF6600</property>
+</properties>

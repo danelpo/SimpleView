@@ -11,16 +11,15 @@
     <string id="nothing">Leave Blank</string>
     
     <string id="h15">1500</string>
-    <string id="h17">1750</string>
     <string id="h20">2000</string>
-    <string id="h22">2250</string>
     <string id="h25">2500</string>
-    <string id="h27">2570</string>
     <string id="h30">3000</string>
     <string id="h35">3500</string>
     <string id="h40">4000</string>
     <string id="h45">4500</string>
     <string id="h50">5000</string>
+    <string id="h55">5500</string>
+    <string id="h60">6000</string>
     
     <string id="FillHoursWithBatteryTitle">Fill Hour Numbers With Battery Status</string>
     <string id="ShowBluetoothConnectionTitle">Show Bluetooth Connection Status</string>

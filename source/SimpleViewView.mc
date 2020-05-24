@@ -82,7 +82,7 @@ class SimpleViewView extends WatchUi.WatchFace {
 		//fills the minutes
 		if(Application.getApp().getProperty("MinuteFill") != 0) {
 			var minuteStatus = 0;
-			if(Application.getApp().getProperty("MinuteFill") == 2) {//calories
+			if(Application.getApp().getProperty("MinuteFill") == 1) {//calories
 				var calorieGoal = Application.getApp().getProperty("CalorieGoal") * 1.2;
 				var calories = 0;
 				if(ActivityMonitor.getInfo().calories) {
@@ -96,7 +96,7 @@ class SimpleViewView extends WatchUi.WatchFace {
 				} else {
 					minuteStatus = (calories.toFloat() / calorieGoal.toFloat());
 				}
-			} else if(Application.getApp().getProperty("MinuteFill") == 1) {//steps
+			} else if(Application.getApp().getProperty("MinuteFill") == 2) {//steps
 				var stepGoal = ActivityMonitor.getInfo().stepGoal * 1.2;
 				var steps = ActivityMonitor.getInfo().steps;
 				if(steps <= 0) {
@@ -134,7 +134,7 @@ class SimpleViewView extends WatchUi.WatchFace {
         }
         
         //draws the arc
-        if(Application.getApp().getProperty("ArcFill") != 0) {
+        if(Application.getApp().getProperty("ArcFill") != 0 && System.getDeviceSettings().screenShape != System.SCREEN_SHAPE_SEMI_ROUND) {
         	if(Application.getApp().getProperty("ArcFill") == 1) {//steps
         		var stepGoal = ActivityMonitor.getInfo().stepGoal;
         		var steps = ActivityMonitor.getInfo().steps;
@@ -164,42 +164,92 @@ class SimpleViewView extends WatchUi.WatchFace {
         	}
         }
         
-        if(Application.getApp().getProperty("ShowNotificationStatus") != 0) {
+        if(Application.getApp().getProperty("ShowNotificationStatus") != 0 && System.getDeviceSettings().phoneConnected) {
+        	var place = 1; //1 = center, 2 = center-right, 0 = center-left
+        	if(Application.getApp().getProperty("ShowBluetoothConnection") == true) {
+        		place++;
+        	}
+        	if(Application.getApp().getProperty("ShowAlarmsSet") == true && System.getDeviceSettings().alarmCount > 0) {
+        		place--;
+        	}
+        	
+        	var xLocation = (dc.getWidth()/2);
+        	if(place == 0) {
+        		xLocation = xLocation-13;
+        	} else if(place == 2) {
+        		xLocation = xLocation+13;
+        	}
+        	
         	dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-	        dc.fillCircle((dc.getWidth()/2), (dc.getHeight()/4) -5, 13);
+	        dc.fillCircle(xLocation, (dc.getHeight()/4) -5, 13);
 	        
 	        dc.setColor(Graphics.COLOR_BLACK, Graphics.COLOR_TRANSPARENT);
+	        
+	        var fixForShape = 0;
 	        var fixForRes = 0;
-	        if(dc.getHeight() == 240 && System.SCREEN_SHAPE_ROUND == 1) {
+	        if(dc.getHeight() == 240 && System.getDeviceSettings().screenShape == System.SCREEN_SHAPE_ROUND) {
 	        	fixForRes = 3;
+	        } else if(System.getDeviceSettings().screenShape == System.SCREEN_SHAPE_SEMI_ROUND) {
+	        	fixForShape = 2;
 	        }
 	        
 	        if(Application.getApp().getProperty("ShowNotificationStatus") == 2) {
 		        if(System.getDeviceSettings().notificationCount < 10) {
-		            dc.drawText((dc.getWidth()/2), (dc.getHeight()/4 - 24), Graphics.FONT_LARGE, System.getDeviceSettings().notificationCount, Graphics.TEXT_JUSTIFY_CENTER);
+		            dc.drawText(xLocation, (dc.getHeight()/4 - 24 + fixForShape), Graphics.FONT_LARGE, System.getDeviceSettings().notificationCount, Graphics.TEXT_JUSTIFY_CENTER);
 		        } else {
-		            dc.drawText((dc.getWidth()/2), (dc.getHeight()/4 - 18 - fixForRes), Graphics.FONT_SMALL, "9+", Graphics.TEXT_JUSTIFY_CENTER);
+		            dc.drawText(xLocation, (dc.getHeight()/4 - 18 - fixForRes + fixForShape), Graphics.FONT_SMALL, "9+", Graphics.TEXT_JUSTIFY_CENTER);
 		        }
 	        } else if(Application.getApp().getProperty("ShowNotificationStatus") == 1) {
-	        	dc.drawText((dc.getWidth()/2), (dc.getHeight()/4 - 24), Graphics.FONT_LARGE, "!", Graphics.TEXT_JUSTIFY_CENTER);
+	        	dc.drawText(xLocation, (dc.getHeight()/4 - 24), Graphics.FONT_LARGE, "!", Graphics.TEXT_JUSTIFY_CENTER);
 	        }
         }
         
         if(Application.getApp().getProperty("ShowBluetoothConnection") == true) {
+        	var place = 2; //0 = left, 1 = center-left, 2 = center
+        	if(Application.getApp().getProperty("ShowNotificationStatus") != 0 && System.getDeviceSettings().phoneConnected) {
+        		place--;
+        	}
+        	if(Application.getApp().getProperty("ShowAlarmsSet") == true && System.getDeviceSettings().alarmCount > 0) {
+        		place--;
+        	}
 	        var bluetooth;
 	        if(System.getDeviceSettings().phoneConnected) {
-	        	bluetooth = new Rez.Drawables.bluetooth();
+	        	if(place == 0) {
+	        		bluetooth = new Rez.Drawables.bluetoothLeft();
+	        	} else if(place == 1) {
+	        		bluetooth = new Rez.Drawables.bluetoothCenterLeft();
+	        	} else {
+	        		bluetooth = new Rez.Drawables.bluetoothCenter();
+	        	}
 	        } else {
-	        	bluetooth = new Rez.Drawables.bluetooth_error();
+	        	if(place == 0) {
+	        		bluetooth = new Rez.Drawables.bluetooth_error_left();
+	        	} else if(place == 1) {
+	        		bluetooth = new Rez.Drawables.bluetooth_error_centerLeft();
+	        	} else {
+	        		bluetooth = new Rez.Drawables.bluetooth_error_center();
+	        	}
 	        }
 	        bluetooth.draw(dc);
         }
         
-        if(Application.getApp().getProperty("ShowAlarmsSet") == true) {
-	        if(System.getDeviceSettings().alarmCount > 0) {
-		        var bell = new Rez.Drawables.bell();
-		        bell.draw(dc);
+        if(Application.getApp().getProperty("ShowAlarmsSet") == true && System.getDeviceSettings().alarmCount > 0) {
+        	var place = 2; //0 = right, 1 = center-right, 2 = center
+        	if(Application.getApp().getProperty("ShowNotificationStatus") != 0 && System.getDeviceSettings().phoneConnected) {
+        		place--;
+        	}
+        	if(Application.getApp().getProperty("ShowBluetoothConnection") == true) {
+        		place--;
+        	}
+	        var bell;
+	        if(place == 0) {
+	        	bell = new Rez.Drawables.bellRight();
+	        } else if(place == 1) {
+	        	bell = new Rez.Drawables.bellCenterRight();
+	        } else {
+	        	bell = new Rez.Drawables.bellCenter();
 	        }
+	        bell.draw(dc);
         }
     }
 

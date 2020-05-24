@@ -1,12 +1,36 @@
 <drawables>
+	<!-- 218x218 -->
     <bitmap id="LauncherIcon" filename="launcher_icon.png" />
-    <drawable-list id="bluetooth" background="Graphics.COLOR_TRANSPARENT" x="73" y="35">
+    
+    <drawable-list id="bluetoothLeft" background="Graphics.COLOR_TRANSPARENT" x="73" y="35">
     	<bitmap id="BT" filename="bluetooth_white.png"/>
     </drawable-list>
-    <drawable-list id="bluetooth_error" background="Graphics.COLOR_TRANSPARENT" x="73" y="35">
+    <drawable-list id="bluetoothCenterLeft" background="Graphics.COLOR_TRANSPARENT" x="80" y="35">
+    	<bitmap id="BT" filename="bluetooth_white.png"/>
+    </drawable-list>
+    <drawable-list id="bluetoothCenter" background="Graphics.COLOR_TRANSPARENT" x="103" y="35">
+    	<bitmap id="BT" filename="bluetooth_white.png"/>
+    </drawable-list>
+    
+    <drawable-list id="bluetooth_error_left" background="Graphics.COLOR_TRANSPARENT" x="73" y="35">
     	<bitmap id="BT_E" filename="bluetooth_red.png"/>
     </drawable-list>
-    <drawable-list id="bell" background="Graphics.COLOR_TRANSPARENT" x="130" y="36">
+    <drawable-list id="bluetooth_error_centerLeft" background="Graphics.COLOR_TRANSPARENT" x="80" y="35">
+    	<bitmap id="BT_E" filename="bluetooth_red.png"/>
+    </drawable-list>
+    <drawable-list id="bluetooth_error_center" background="Graphics.COLOR_TRANSPARENT" x="103" y="35">
+    	<bitmap id="BT_E" filename="bluetooth_red.png"/>
+    </drawable-list>
+    
+    
+    <drawable-list id="bellRight" background="Graphics.COLOR_TRANSPARENT" x="130" y="36">
     	<bitmap id="bellIcon" filename="bell.png"/>
     </drawable-list>
+    <drawable-list id="bellCenterRight" background="Graphics.COLOR_TRANSPARENT" x="122" y="36">
+    	<bitmap id="bellIcon" filename="bell.png"/>
+    </drawable-list>
+    <drawable-list id="bellCenter" background="Graphics.COLOR_TRANSPARENT" x="98" y="36">
+    	<bitmap id="bellIcon" filename="bell.png"/>
+    </drawable-list>
+
 </drawables>
