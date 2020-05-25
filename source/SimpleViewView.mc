@@ -3,7 +3,6 @@ using Toybox.Graphics;
 using Toybox.System;
 using Toybox.Lang;
 using Toybox.Time;
-using Toybox.Sensor;
 using Toybox.Time.Gregorian;
 using Toybox.ActivityMonitor;
 using Toybox.Application;
@@ -45,9 +44,6 @@ class SimpleViewView extends WatchUi.WatchFace {
         }
         
         var timeString = Lang.format("$1$:$2$", [hour, System.getClockTime().min.format("%02d")]);
-
-        var today = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
-        var dateString = Lang.format("$1$ $2$",[today.day_of_week, today.day]);
         
         var font = myFont;
 		var fontDimentions = dc.getTextDimensions(timeString, font);
@@ -66,14 +62,13 @@ class SimpleViewView extends WatchUi.WatchFace {
 			var specificDimentionsFirstHalf = dc.getTextDimensions("" + hour, font);
 
 			var batteryStatusColor = Graphics.COLOR_GREEN;
-			if(Application.getApp().getProperty("ChangeBatteryColorBasedOnStatus") == true) {
-				if(batteryStatus < 0.5) {
-					batteryStatusColor = Graphics.COLOR_YELLOW;
-				}
-				if(batteryStatus < 0.2) {
-					batteryStatusColor = Graphics.COLOR_RED;
-				}
+			if(batteryStatus < 0.5) {
+				batteryStatusColor = Graphics.COLOR_YELLOW;
 			}
+			if(batteryStatus < 0.2) {
+				batteryStatusColor = Graphics.COLOR_RED;
+			}
+			
 			//print the green rect over the time
 			dc.setColor(batteryStatusColor, Graphics.COLOR_TRANSPARENT);
 			dc.fillRectangle(leftOfText, topOfFirstRect, specificDimentionsFirstHalf[0], fontDimentions[1]*batteryStatus - 2);
@@ -97,8 +92,15 @@ class SimpleViewView extends WatchUi.WatchFace {
 					minuteStatus = (calories.toFloat() / calorieGoal.toFloat());
 				}
 			} else if(Application.getApp().getProperty("MinuteFill") == 2) {//steps
-				var stepGoal = ActivityMonitor.getInfo().stepGoal * 1.2;
-				var steps = ActivityMonitor.getInfo().steps;
+				var stepGoal = 5000;
+				var steps = 0;
+				if(ActivityMonitor.getInfo().stepGoal) {
+					stepGoal = ActivityMonitor.getInfo().stepGoal * 1.2;
+				}
+				if(ActivityMonitor.getInfo().steps) {
+					steps = ActivityMonitor.getInfo().steps;
+				}
+				
 				if(steps <= 0) {
 					minuteStatus = 0;
 				} else if(steps >= stepGoal) {
@@ -122,35 +124,68 @@ class SimpleViewView extends WatchUi.WatchFace {
 		dc.drawText(dc.getWidth()/2, topOfText, font, timeString, Graphics.TEXT_JUSTIFY_CENTER);
         
         //print the date
-        dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-        dc.drawText(dc.getWidth()/2, dc.getHeight()*0.73, Graphics.FONT_SYSTEM_MEDIUM, dateString.toUpper(), Graphics.TEXT_JUSTIFY_CENTER);
+        //0,1,2,3,4 : none, DAY_OF_WEEK DAY_IN_MONTH, DAY_OF_WEEK MONTH, MONTH DAY_IN_MONTH, MONTH YEAR
+        if(Application.getApp().getProperty("DateFormat") != 0) {
+        	var dateString;
+        	var today = Gregorian.info(Time.now(), Time.FORMAT_MEDIUM);
+        	
+        	if(Application.getApp().getProperty("DateFormat") == 1)
+        	{//DAY_OF_WEEK DAY_IN_MONTH
+        		dateString = Lang.format("$1$ $2$",[today.day_of_week, today.day]);
+        	}
+        	else if( Application.getApp().getProperty("DateFormat") == 2)
+        	{//DAY_OF_WEEK MONTH
+        		dateString = Lang.format("$1$ $2$",[today.day_of_week, today.month]);
+        	}
+        	else if(Application.getApp().getProperty("DateFormat") == 3)
+        	{//MONTH DAY_IN_MONTH
+        		dateString = Lang.format("$1$ $2$",[today.month, today.day]);
+        	}
+        	else
+        	{//Application.getApp().getProperty("DateFormat") == 4 //MONTH YEAR
+        		dateString = Lang.format("$1$ $2$",[today.month, today.year]);
+        	}
+        	dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
+        	dc.drawText(dc.getWidth()/2, dc.getHeight()*0.73, Graphics.FONT_SYSTEM_MEDIUM, dateString.toUpper(), Graphics.TEXT_JUSTIFY_CENTER);
+        }
         
         //prints the seconds
-    	if(isSleeping == false) {
+    	if(isSleeping == false && System.getDeviceSettings().screenShape != System.SCREEN_SHAPE_RECTANGLE) {
         	dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-        	dc.setPenWidth(15);
+        	dc.setPenWidth(10);
         	var endOfArc = (90 - (6*System.getClockTime().sec));
-        	dc.drawArc((dc.getWidth()/2), (dc.getHeight()/2), (dc.getHeight()/2), Graphics.ARC_CLOCKWISE, endOfArc+1, endOfArc);
+        	dc.drawArc((dc.getWidth()/2), (dc.getHeight()/2), (dc.getHeight()/2) - 5, Graphics.ARC_CLOCKWISE, endOfArc+1, endOfArc);
         }
         
         //draws the arc
-        if(Application.getApp().getProperty("ArcFill") != 0 && System.getDeviceSettings().screenShape != System.SCREEN_SHAPE_SEMI_ROUND) {
+        if(Application.getApp().getProperty("ArcFill") != 0 && System.getDeviceSettings().screenShape == System.SCREEN_SHAPE_ROUND) {
         	if(Application.getApp().getProperty("ArcFill") == 1) {//steps
-        		var stepGoal = ActivityMonitor.getInfo().stepGoal;
-        		var steps = ActivityMonitor.getInfo().steps;
+        		var stepGoal = 5000;
+        		var steps = 0;
+        		if(ActivityMonitor.getInfo().stepGoal) {
+        			stepGoal = ActivityMonitor.getInfo().stepGoal;
+        		}
+        		if(ActivityMonitor.getInfo().steps) {
+        			steps = ActivityMonitor.getInfo().steps;
+        		}
+        		
         		if(steps >= stepGoal) {
 		            dc.setColor(Application.getApp().getProperty("FinishedArcColor"), Graphics.COLOR_TRANSPARENT);
 		            dc.setPenWidth(1);
-		            dc.drawArc((dc.getWidth()/2), (dc.getHeight()/2), (dc.getHeight()/2) - 11, Graphics.ARC_CLOCKWISE, 90, 90);
+		            dc.drawArc((dc.getWidth()/2), (dc.getHeight()/2), (dc.getHeight()/2) - 12, Graphics.ARC_CLOCKWISE, 90, 90);
 		        } else if(steps > 0){
 		            dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
 		            var endOfStepArc = (90 - ((360.toFloat())/(stepGoal.toFloat())*(steps.toFloat())));
 		            dc.setPenWidth(3);
-		            dc.drawArc((dc.getWidth()/2), (dc.getHeight()/2), (dc.getHeight()/2) - 10, Graphics.ARC_CLOCKWISE, 90, endOfStepArc);
+		            dc.drawArc((dc.getWidth()/2), (dc.getHeight()/2), (dc.getHeight()/2) - 11, Graphics.ARC_CLOCKWISE, 90, endOfStepArc);
 		        }
         	} else if(Application.getApp().getProperty("ArcFill") == 2) {//calories
         		var calorieGoal = Application.getApp().getProperty("CalorieGoal");
-        		var calories = ActivityMonitor.getInfo().calories;
+        		var calories = 0;
+        		if(ActivityMonitor.getInfo().calories) {
+        			calories = ActivityMonitor.getInfo().calories;
+        		}
+        		
         		if(calories >= calorieGoal) {
 		            dc.setColor(Application.getApp().getProperty("FinishedArcColor"), Graphics.COLOR_TRANSPARENT);
 		            dc.setPenWidth(1);
@@ -187,20 +222,34 @@ class SimpleViewView extends WatchUi.WatchFace {
 	        
 	        var fixForShape = 0;
 	        var fixForRes = 0;
+	        var largeFont = Graphics.FONT_LARGE;
+	        var smallFont = Graphics.FONT_SMALL;
 	        if(dc.getHeight() == 240 && System.getDeviceSettings().screenShape == System.SCREEN_SHAPE_ROUND) {
 	        	fixForRes = 3;
 	        } else if(System.getDeviceSettings().screenShape == System.SCREEN_SHAPE_SEMI_ROUND) {
 	        	fixForShape = 2;
 	        }
+	        if(dc.getHeight() == 208 && System.getDeviceSettings().screenShape == System.SCREEN_SHAPE_ROUND) {
+	        	fixForShape = 2;
+	        }
+	        if(dc.getHeight() == 260 && System.getDeviceSettings().screenShape == System.SCREEN_SHAPE_ROUND) {
+	        	fixForShape = -2;
+	        	fixForRes = 1;
+	        }
+	        if(dc.getHeight() == 280 && System.getDeviceSettings().screenShape == System.SCREEN_SHAPE_ROUND) {
+	        	fixForShape = -3;
+	        	largeFont = Graphics.FONT_MEDIUM;
+	        	smallFont = Graphics.FONT_TINY;
+	        }
 	        
 	        if(Application.getApp().getProperty("ShowNotificationStatus") == 2) {
 		        if(System.getDeviceSettings().notificationCount < 10) {
-		            dc.drawText(xLocation, (dc.getHeight()/4 - 24 + fixForShape), Graphics.FONT_LARGE, System.getDeviceSettings().notificationCount, Graphics.TEXT_JUSTIFY_CENTER);
+		            dc.drawText(xLocation, (dc.getHeight()/4 - 24 + fixForShape), largeFont, System.getDeviceSettings().notificationCount, Graphics.TEXT_JUSTIFY_CENTER);
 		        } else {
-		            dc.drawText(xLocation, (dc.getHeight()/4 - 18 - fixForRes + fixForShape), Graphics.FONT_SMALL, "9+", Graphics.TEXT_JUSTIFY_CENTER);
+		            dc.drawText(xLocation, (dc.getHeight()/4 - 18 - fixForRes + fixForShape), smallFont, "9+", Graphics.TEXT_JUSTIFY_CENTER);
 		        }
 	        } else if(Application.getApp().getProperty("ShowNotificationStatus") == 1) {
-	        	dc.drawText(xLocation, (dc.getHeight()/4 - 24), Graphics.FONT_LARGE, "!", Graphics.TEXT_JUSTIFY_CENTER);
+	        	dc.drawText(xLocation, (dc.getHeight()/4 - 24), largeFont, "!", Graphics.TEXT_JUSTIFY_CENTER);
 	        }
         }
         

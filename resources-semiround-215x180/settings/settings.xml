@@ -23,6 +23,17 @@
         </settingConfig>
     </setting>
     
+    <!-- 0,1,2,3,4 : none, DAY_OF_WEEK DAY_IN_MONTH, DAY_OF_WEEK MONTH, MONTH DAY_IN_MONTH, MONTH YEAR -->
+    <setting propertyKey="@Properties.DateFormat" title="@Strings.DateFormatTitle">
+        <settingConfig type="list">
+            <listEntry value="0">@Strings.none</listEntry>
+            <listEntry value="1">@Strings.WeekDate</listEntry>
+            <listEntry value="2">@Strings.WeekMonth</listEntry>
+            <listEntry value="3">@Strings.MonthDate</listEntry>
+            <listEntry value="4">@Strings.MonthYear</listEntry>
+        </settingConfig>
+    </setting>
+    
     <setting propertyKey="@Properties.FillHoursWithBattery" title="@Strings.FillHoursWithBatteryTitle">
     	<settingConfig type="boolean" />
     </setting>
@@ -41,10 +52,6 @@
     </setting>
     
     <setting propertyKey="@Properties.ShowAlarmsSet" title="@Strings.ShowAlarmsSetTitle">
-    	<settingConfig type="boolean" />
-    </setting>
-    
-    <setting propertyKey="@Properties.ChangeBatteryColorBasedOnStatus" title="@Strings.ChangeBatteryColorBasedOnStatusTitle">
     	<settingConfig type="boolean" />
     </setting>
     

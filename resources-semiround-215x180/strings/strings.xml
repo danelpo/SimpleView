@@ -28,7 +28,6 @@
     <string id="notif0">Do not show notifications</string>
     <string id="notif1">Show notifications, without number</string>
     <string id="notif2">Show number of notifications</string>
-    <string id="ChangeBatteryColorBasedOnStatusTitle">Change Battery Status Color Based On Percentage</string>
     
     <string id="ShowAlarmsSetTitle">Show If Any Alarms Are Set</string>
     
@@ -45,4 +44,11 @@
     <string id="Purple">Purple</string>
     <string id="LightBlue">Light Blue</string>
     <string id="Orange">Orange</string>
+    
+    <string id="DateFormatTitle">Select Date Display Format</string>
+    <string id="none">Do not display date on watchface</string>
+    <string id="WeekDate">WeekDay MonthDay (SUN 24)</string>
+    <string id="WeekMonth">WeekDay Month (SUN MAY)</string>
+    <string id="MonthDate">Month MonthDay (MAY 24)</string>
+    <string id="MonthYear">Month Year (MAY 2020)</string>
 </strings>

@@ -3,11 +3,11 @@
 	<property id="CalorieGoal" type="number">2500</property>
 	
 	<property id="FillHoursWithBattery" type="boolean">true</property>
-	<property id ="ChangeBatteryColorBasedOnStatus" type="boolean">true</property>
 	<property id="ShowBluetoothConnection" type="boolean">true</property>
 	<property id="ShowAlarmsSet" type="boolean">true</property>
 	
 	<property id="ShowNotificationStatus" type="number">2</property><!-- 0,1,2 : don't show, show if notification w/o number, show w number -->
+	<property id="DateFormat" type="number">1</property><!-- 0,1,2,3,4 : none, DAY_OF_WEEK DAY_IN_MONTH, DAY_OF_WEEK MONTH, MONTH DAY_IN_MONTH, MONTH YEAR -->
 	
 	<property id ="MinuteFillColor" type="number">0xFF6600</property>
 </properties>
